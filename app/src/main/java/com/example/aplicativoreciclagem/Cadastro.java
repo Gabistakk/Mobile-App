@@ -1,5 +1,7 @@
 package com.example.aplicativoreciclagem;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,17 +9,26 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Cadastro extends AppCompatActivity {
@@ -28,7 +39,7 @@ public class Cadastro extends AppCompatActivity {
     EditText etSenha;
     EditText etConfirmarSenha;
     FirebaseAuth mAuth;
-
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +47,9 @@ public class Cadastro extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
+
+        db = FirebaseFirestore.getInstance();
 
 
         Button backButton = (Button) findViewById(R.id.backbutton);
@@ -87,6 +101,23 @@ public class Cadastro extends AppCompatActivity {
             etConfirmarSenha.requestFocus();
         }
         else{
+            Map<String, Object> user = new HashMap<>();
+            user.put("email", email);
+            user.put("meta", "30000");
+            db.collection("users")
+                            .add(user)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Log.d(TAG, "Documento adicionado com ID: " + documentReference.getId());
+                                        }
+                                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "Erro adicionando o Documento", e);
+                                                }
+                                            });
             mAuth.createUserWithEmailAndPassword(email,senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
