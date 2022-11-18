@@ -22,6 +22,7 @@ public class TelaInicial extends AppCompatActivity {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
+
         btPerfil = findViewById(R.id.ButtonPerfil);
 
         btPerfil.setOnClickListener(view -> {

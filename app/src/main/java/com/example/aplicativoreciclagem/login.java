@@ -34,6 +34,8 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.login);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
+
         etLogin = findViewById(R.id.editTextEmail);
         etSenha = findViewById(R.id.editTextSenha);
         btEntrar = findViewById(R.id.buttonEntrar);

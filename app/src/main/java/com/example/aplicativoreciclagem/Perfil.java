@@ -28,6 +28,7 @@ public class Perfil extends AppCompatActivity {
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
+
         tvLogout = findViewById(R.id.textViewLogout);
         tvNome = findViewById(R.id.textViewNome);
         mAuth = FirebaseAuth.getInstance();
