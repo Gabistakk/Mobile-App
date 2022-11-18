@@ -36,7 +36,6 @@ public class Cadastro extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
         Button backButton = (Button) findViewById(R.id.backbutton);
         btnCadastro = findViewById(R.id.buttonCadastrar);
         etEmail = findViewById(R.id.editTextEmail);
